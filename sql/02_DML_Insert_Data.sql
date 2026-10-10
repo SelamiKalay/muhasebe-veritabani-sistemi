@@ -9,6 +9,9 @@ GO
 
 -- ============================================================
 -- 1. Kullanicilar — 3 farklı rolde kullanıcı
+--    NOT: Hash değerleri yalnızca örnek veridir (tuzsuz SHA1/MD5, zayıf şifreler).
+--    Gerçek kullanımda tuzlu ve yavaş bir algoritma (bcrypt/scrypt/PBKDF2) kullanın;
+--    web uygulaması (webapp/) bu nedenle werkzeug scrypt hash'i kullanır.
 -- ============================================================
 INSERT INTO Kullanicilar (KullaniciAdi, SifreHash, AdSoyad, Rol) VALUES
 ('admin',       'a94a8fe5ccb19ba61c4c0873d391e987982fbbd3',  N'Ahmet Yılmaz',      'Yonetici'),

@@ -6,3 +6,6 @@ venv/
 
 # SQLite veritabanı (uygulama ilk açılışta oluşturur)
 *.db
+
+# Ilk calistirmada uretilen yonetici sifresi
+ILK_GIRIS.txt

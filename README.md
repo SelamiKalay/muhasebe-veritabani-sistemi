@@ -49,7 +49,13 @@ python app.py
 ```
 
 The app opens at `http://127.0.0.1:5000`. The database is created with sample data
-on first run. Default login: `admin` / `admin` — change it after the first login.
+on first run.
+
+**First login:** There is no fixed default password. On first run a random
+password is generated for the `admin` user; it is printed to the console and saved
+to `webapp/ILK_GIRIS.txt` (this file is not committed). After logging in, change it
+via **Users → Change Password** and delete the file. To choose the password
+yourself: `MUHASEBE_ADMIN_SIFRE=... python app.py`
 
 For more test data: `python generate_6000_fis.py`
 

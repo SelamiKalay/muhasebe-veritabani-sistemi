@@ -5,10 +5,21 @@ Muhasebe Veritabanı — Örnek Veri Yükleme Scripti
 Parametrik sorgular (?) ile SQL Injection'a karşı güvenlidir.
 """
 
-import sqlite3
 import os
+import secrets
+import sqlite3
 
-DATABASE_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'muhasebe.db')
+from werkzeug.security import generate_password_hash
+
+WEBAPP_DIR = os.path.dirname(os.path.abspath(__file__))
+DATABASE_PATH = os.path.join(WEBAPP_DIR, 'muhasebe.db')
+# Konsolsuz başlatmada (baslat_sessiz.vbs) da bulunabilsin diye ilk şifre buraya yazılır
+ILK_GIRIS_DOSYASI = os.path.join(WEBAPP_DIR, 'ILK_GIRIS.txt')
+
+
+def ilk_admin_sifresi():
+    """Ortam değişkeni verilmişse onu, yoksa rastgele bir şifre döndürür."""
+    return os.environ.get('MUHASEBE_ADMIN_SIFRE') or secrets.token_urlsafe(9)
 
 
 def seed():
@@ -25,10 +36,13 @@ def seed():
         return
 
     # ── 1. Kullanicilar ──
+    # Herkesçe bilinen sabit bir şifre (admin/admin) yerine ilk çalıştırmada
+    # rastgele şifre üretilir; giriş yaptıktan sonra değiştirilmelidir.
+    admin_sifre = ilk_admin_sifresi()
     cur.executemany("""
         INSERT INTO Kullanicilar (KullaniciAdi, SifreHash, AdSoyad, Rol) VALUES (?,?,?,?)
     """, [
-        ('admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 'Sistem Yöneticisi', 'Yonetici'),
+        ('admin', generate_password_hash(admin_sifre), 'Sistem Yöneticisi', 'Yonetici'),
     ])
 
     # ── 2. MuhasebeDonemleri ──
@@ -94,6 +108,14 @@ def seed():
     db.commit()
     db.close()
     print("[OK] Temel ayarlar ve Admin kullanıcısı başarıyla yüklendi.")
+
+    with open(ILK_GIRIS_DOSYASI, 'w', encoding='utf-8') as f:
+        f.write('Muhasebe Sistemi - ilk giris bilgileri\n'
+                f'Kullanici adi: admin\nSifre: {admin_sifre}\n\n'
+                'Giris yaptiktan sonra sifreyi degistirin ve bu dosyayi silin.\n')
+    print(f"[i] Yönetici hesabı: admin / {admin_sifre}")
+    print(f"    (Bu şifre {ILK_GIRIS_DOSYASI} dosyasına da yazıldı; "
+          "giriş yaptıktan sonra şifreyi değiştirip dosyayı silin.)")
 
 
 if __name__ == '__main__':

@@ -50,8 +50,13 @@ python app.py
 ```
 
 Uygulama `http://127.0.0.1:5000` adresinde açılır. Veritabanı ilk çalıştırmada
-örnek verilerle otomatik oluşturulur. Varsayılan giriş: `admin` / `admin` — ilk
-girişten sonra değiştirin.
+örnek verilerle otomatik oluşturulur.
+
+**İlk giriş:** Sabit bir varsayılan şifre yoktur. İlk çalıştırmada `admin`
+kullanıcısı için rastgele bir şifre üretilir; konsola yazdırılır ve
+`webapp/ILK_GIRIS.txt` dosyasına kaydedilir (bu dosya Git'e girmez). Giriş
+yaptıktan sonra **Kullanıcılar → Şifre Değiştir** ile şifreyi değiştirip dosyayı
+silin. Şifreyi kendiniz belirlemek için: `MUHASEBE_ADMIN_SIFRE=... python app.py`
 
 Daha fazla test verisi için: `python generate_6000_fis.py`
 
