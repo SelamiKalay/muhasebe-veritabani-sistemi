@@ -12,7 +12,6 @@ import json
 import os
 import hashlib
 import hmac
-from datetime import datetime
 from functools import wraps
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -46,7 +45,9 @@ def login_required(f):
     def decorated_function(*args, **kwargs):
         if 'kullanici_id' not in session:
             flash('Lütfen giriş yapın.', 'warning')
-            return redirect(url_for('login', next=request.url))
+            # Göreli yol: guvenli_yonlendirme mutlak URL'leri reddeder
+            hedef = request.full_path if request.query_string else request.path
+            return redirect(url_for('login', next=hedef))
         return f(*args, **kwargs)
     return decorated_function
 

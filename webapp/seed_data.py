@@ -11,10 +11,11 @@ import sqlite3
 
 from werkzeug.security import generate_password_hash
 
-WEBAPP_DIR = os.path.dirname(os.path.abspath(__file__))
-DATABASE_PATH = os.path.join(WEBAPP_DIR, 'muhasebe.db')
-# Konsolsuz başlatmada (baslat_sessiz.vbs) da bulunabilsin diye ilk şifre buraya yazılır
-ILK_GIRIS_DOSYASI = os.path.join(WEBAPP_DIR, 'ILK_GIRIS.txt')
+from database import DATABASE_PATH
+
+# Konsolsuz başlatmada (baslat_sessiz.vbs) da bulunabilsin diye ilk şifre
+# veritabanının yanına yazılır (varsayılan: webapp/ILK_GIRIS.txt)
+ILK_GIRIS_DOSYASI = os.path.join(os.path.dirname(DATABASE_PATH), 'ILK_GIRIS.txt')
 
 
 def ilk_admin_sifresi():

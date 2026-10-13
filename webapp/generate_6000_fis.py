@@ -7,11 +7,10 @@ gerçekçi (düz olmayan) değerlerdedir.
 """
 
 import sqlite3
-import os
 import random
 from datetime import datetime, timedelta
 
-DATABASE_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'muhasebe.db')
+from database import DATABASE_PATH  # MUHASEBE_DB ile değiştirilebilir
 
 
 def generate():
@@ -135,7 +134,7 @@ def generate():
     baslangic = datetime(2025, 1, 1)
     toplam_gun = 449
 
-    print(f">> 6000 adet fiş oluşturma başlatılıyor...")
+    print(">> 6000 adet fiş oluşturma başlatılıyor...")
     print(f"   Veritabanı: {DATABASE_PATH}")
 
     toplam_fis = 6000

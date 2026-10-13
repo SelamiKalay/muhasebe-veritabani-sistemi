@@ -9,8 +9,10 @@ import sqlite3
 import os
 from flask import g
 
-# Veritabanı dosyasının yolu (webapp/ klasörü altında)
-DATABASE_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'muhasebe.db')
+# Veritabanı dosyasının yolu: varsayılan webapp/muhasebe.db; MUHASEBE_DB ile
+# değiştirilebilir (testler geçici bir veritabanı kullanır)
+DATABASE_PATH = os.environ.get('MUHASEBE_DB') or os.path.join(
+    os.path.dirname(os.path.abspath(__file__)), 'muhasebe.db')
 
 
 def get_db():
