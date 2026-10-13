@@ -59,4 +59,15 @@ yourself: `MUHASEBE_ADMIN_SIFRE=... python app.py`
 
 For more test data: `python generate_6000_fis.py`
 
+Unit tests (password hashing, login/session, access control, safe redirects) run
+against a temporary database and never touch the real `muhasebe.db`:
+
+```bash
+cd webapp
+pip install pytest
+python -m pytest tests
+```
+
+The database location can be changed with the `MUHASEBE_DB` environment variable.
+
 ![ER diagram](docs/ER_Diyagrami.png)

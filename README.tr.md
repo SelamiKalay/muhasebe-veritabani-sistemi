@@ -60,4 +60,15 @@ silin. Şifreyi kendiniz belirlemek için: `MUHASEBE_ADMIN_SIFRE=... python app.
 
 Daha fazla test verisi için: `python generate_6000_fis.py`
 
+Birim testleri (şifre hash'i, giriş/oturum, yetki kontrolü, güvenli yönlendirme)
+geçici bir veritabanında çalışır; gerçek `muhasebe.db` dosyasına dokunmaz:
+
+```bash
+cd webapp
+pip install pytest
+python -m pytest tests
+```
+
+Veritabanı dosyasının yeri `MUHASEBE_DB` ortam değişkeniyle değiştirilebilir.
+
 ![ER Diyagramı](docs/ER_Diyagrami.png)

@@ -9,3 +9,4 @@ venv/
 
 # Ilk calistirmada uretilen yonetici sifresi
 ILK_GIRIS.txt
+.pytest_cache/

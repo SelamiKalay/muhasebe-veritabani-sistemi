@@ -1,0 +1,32 @@
+name: tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  webapp:
+    name: webapp (Python ${{ matrix.python }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ["3.11", "3.12", "3.13"]
+    defaults:
+      run:
+        working-directory: webapp
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: ${{ matrix.python }}
+          cache: pip
+          cache-dependency-path: webapp/requirements.txt
+      - name: Bagimliliklar
+        run: pip install -r requirements.txt pytest ruff==0.16.10
+      - name: ruff (pyflakes kurallari)
+        run: ruff check --select F --output-format github .
+      - name: Testler
+        run: python -m pytest -v tests
